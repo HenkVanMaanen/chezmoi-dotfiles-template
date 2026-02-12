@@ -1,0 +1,25 @@
+{{- $secrets := joinPath .chezmoi.sourceDir ".chezmoidata.toml.age" | include | decrypt | fromToml -}}
+
+# Include identity based on remote URL
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+    path = ~/.gitconfig-github
+
+[includeIf "hasconfig:remote.*.url:https://gitlab.com/**"]
+    path = ~/.gitconfig-gitlab
+
+# Add more hosts as needed:
+# [includeIf "hasconfig:remote.*.url:https://your-git-server.com/**"]
+#     path = ~/.gitconfig-yourserver
+
+[credential]
+    useHttpPath = true
+
+# GitHub credentials (personal)
+[credential "https://github.com/YOUR_GITHUB_USERNAME"]
+    helper = "!f() { echo username={{ $secrets.git.github_user }}; echo password={{ $secrets.git.github_pat }}; }; f"
+
+# GitLab credentials
+[credential "https://gitlab.com"]
+    helper = "!f() { echo username={{ $secrets.git.gitlab_user }}; echo password={{ $secrets.git.gitlab_pat }}; }; f"
+
+# Add more credential helpers as needed
