@@ -48,19 +48,6 @@ git push
 
 ## Usage
 
-### New machine setup
-
-```bash
-# Install chezmoi
-sh -c "$(curl -fsLS get.chezmoi.io)"
-
-# Copy your age key to ~/.config/chezmoi/key.txt
-
-# Apply dotfiles
-chezmoi init https://github.com/YOUR_USERNAME/YOUR_REPO.git
-chezmoi apply
-```
-
 ### Update secrets
 
 ```bash
